@@ -2,7 +2,6 @@
 
 A Django-based web application to manage your personal movies & series watchlist.  
 Built by **Shahad Almalki**.
-
 ---
 
 #  Features
