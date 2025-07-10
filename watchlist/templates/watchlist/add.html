@@ -1,0 +1,22 @@
+{% extends 'watchlist/base.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <h2 class="text-center mb-4">Add Movie/Series</h2>
+                                <!--needed so the form can upload files (poster image).-->
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="d-flex justify-content-between">
+                    <!--buttons-->
+                    <button type="submit" class="btn btn-secondary ">Add To Watchlist</button>
+                    <a href="{% url 'home' %}" class="btn btn-secondary ms-5">Cancel</a>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!--responsive design-->
+    <title>My Watchlist</title>
+    <link rel="stylesheet" href="{% static 'watchlist/css/bootstrap.min.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /><!--Select2 CSS for fancy dropdowns.-->
+    <link rel="stylesheet" href="{% static 'watchlist/css/main.css' %}">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">My WatchList</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'home'%}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'add_item' %}">Add</a>                
+            </li>
+            {% if show_type_filter %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  Filter
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{% url 'home' %}">All</a></li>
+                <li><a class="dropdown-item" href="?type=Movie">Movies</a></li>
+                <li><a class="dropdown-item" href="?type=Series">Series</a></li>
+              </ul>
+            </li>
+            {% endif %}
+            <li>
+              <form class="d-flex ms-lg-3" method="get" action="{% url 'movie_search' %}">
+              <input class="form-control me-2" type="search" name="q" placeholder="Search by title..." aria-label="Search">
+              <button class="btn btn-secondary" type="submit">Search</button>
+              </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Message alert -->
+    {% if messages %}
+      <div class="position-fixed top-0 end-0 p-3" style="z-index: 1055; margin-top:70px;">
+        {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show shadow" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <!-- End Message alert -->
+
+    <!-- Content -->
+    <main class="flex-fill pt-3 mt-2 mb-4">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class=" text-center py-3 mt-auto">
+      © 2025 My WatchList | Developed by Shahad Almalki 
+    </footer>
+
+    <script src="{% static 'watchlist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+      $(document).ready(function() {
+          $('.select2').select2({
+              placeholder: "Choose Cast",
+              allowClear: true
+          });
+      });
+    </script>
+</body>
+</html>

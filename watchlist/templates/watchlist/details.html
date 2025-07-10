@@ -1,0 +1,39 @@
+{% extends 'watchlist/base.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="row">
+        <!--Left column: poster-->
+        <div class="col-md-4">
+            {% if item.poster %}
+                <img src="{{ item.poster.url }}" class="img-fluid" alt="{{ item.title }}">
+            {% elif item.poster_url %}
+                <img src="{{ item.poster_url }}" class="img-fluid" alt="{{ item.title }}">
+            {% endif %}
+        </div>
+        <!-- Right column: details-->
+        <div class="col-md-8">
+            <h3>{{ item.title }}</h3>
+            <p><strong>Type:</strong> {{ item.type }}</p>
+            <p><strong>Status:</strong> {{ item.status }}</p>
+            <p><strong>Year:</strong> {{ item.year }}</p>
+            <p><strong>Genre:</strong> {{ item.genre }}</p>
+            <p><strong>Rating:</strong> {{ item.rating }}</p>
+
+            <p><strong>Cast:</strong></p>
+            <ul>
+                {% for cast in item.cast.all %}
+                    <li>{{ cast.name }}</li>
+                {% empty %}
+                    <li>No cast assigned</li>
+                {% endfor %}
+            </ul>
+            <!--buttons-->
+            <div class="mt-4">
+                <a href="{% url 'edit_item' item.pk %}" class="btn btn-outline-primary">Edit</a>
+                <a href="{% url 'delete_item' item.pk %}" class="btn btn-outline-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
